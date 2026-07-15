@@ -1,3 +1,4 @@
+import StatusChart from "../components/StatusChart";
 import { useEffect, useState } from "react";
 import { getDashboard } from "../services/api";
 import { useNavigate } from "react-router-dom";
@@ -5,6 +6,7 @@ import "./Dashboard.css";
 
 function Dashboard() {
     const navigate = useNavigate();
+    const [showNotifications, setShowNotifications] = useState(false);
     const [stats, setStats] = useState({
         total: 0,
         pending: 0,
@@ -31,7 +33,9 @@ function Dashboard() {
           <li onClick={() => navigate("/tickets")}>
   🎫 Tickets
 </li>
-          <li>👨 Students</li>
+<li onClick={() => navigate("/students")}>
+  👨 Students
+</li>
           <li>📊 Reports</li>
           <li>⚙️ Settings</li>
         </ul>
@@ -46,7 +50,27 @@ function Dashboard() {
 </div>
 
 <div className="topbar-right">
-  <span>🔔</span>
+<div className="notification">
+
+<span onClick={() => setShowNotifications(!showNotifications)}>
+  🔔
+</span>
+
+{showNotifications && (
+
+  <div className="notification-box">
+
+    <p>🆕 New Ticket Received</p>
+
+    <p>✅ Ticket Approved</p>
+
+    <p>📌 11 Pending Requests</p>
+
+  </div>
+
+)}
+
+</div>
   <div className="profile-menu">
   <span>👤 Narayan ▾</span>
 
@@ -84,6 +108,25 @@ function Dashboard() {
           </div>
 
         </div>
+        <div className="dashboard-grid">
+
+  <div className="chart-card">
+    <h2>Status Analytics</h2>
+    <StatusChart stats={stats} />
+  </div>
+
+  <div className="activity-card">
+    <h2>Recent Activity</h2>
+
+    <ul>
+      <li>🆕 Rahul submitted a new ticket</li>
+      <li>✅ Pushpa ticket approved</li>
+      <li>🔄 Gourav requested validity extension</li>
+      <li>📌 11 tickets are pending</li>
+    </ul>
+  </div>
+
+</div>
       </main>
 
     </div>

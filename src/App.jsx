@@ -1,3 +1,4 @@
+import Students from "./pages/Students";
 import Tickets from "./pages/Tickets";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useState } from "react";
@@ -77,6 +78,16 @@ function App() {
   element={
     loggedIn ? (
       <Tickets />
+    ) : (
+      <Navigate to="/" />
+    )
+  }
+/>
+<Route
+  path="/students"
+  element={
+    loggedIn ? (
+      <Students />
     ) : (
       <Navigate to="/" />
     )
