@@ -65,4 +65,30 @@ tr:nth-child(even){
 .reject{
     background:#dc2626;
     color:white;
-}
+}.search-box{
+    width:350px;
+    padding:12px;
+    margin:20px 0;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:15px;
+  }.status-badge{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+    color:white;
+  }
+  
+  .status-badge.pending{
+    background:#f59e0b;
+  }
+  
+  .status-badge.approved{
+    background:#16a34a;
+  }
+  
+  .status-badge.rejected{
+    background:#dc2626;
+  }

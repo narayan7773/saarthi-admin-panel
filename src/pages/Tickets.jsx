@@ -6,6 +6,7 @@ function Tickets() {
   const [tickets, setTickets] = useState([]);
   const [selected, setSelected] = useState(null);
   const [remark, setRemark] = useState("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     loadTickets();
@@ -31,6 +32,13 @@ function Tickets() {
     <div className="tickets-page">
 
       <h1>Ticket Management</h1>
+      <input
+  type="text"
+  placeholder="🔍 Search Ticket, Name, Mobile, Gmail..."
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+  className="search-box"
+/>
 
       <table>
         <thead>
@@ -44,12 +52,27 @@ function Tickets() {
         </thead>
 
         <tbody>
-          {tickets.map((t) => (
+        {tickets
+  .filter((t) =>
+    (
+      t.ticket +
+      t.name +
+      t.mobile +
+      t.gmail
+    )
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  )
+  .map((t) => (
             <tr key={t.ticket}>
               <td>{t.ticket}</td>
               <td>{t.name}</td>
               <td>{t.course}</td>
-              <td>{t.status}</td>
+              <td>
+  <span className={`status-badge ${t.status.toLowerCase()}`}>
+    {t.status}
+  </span>
+</td>
 
               <td>
                 <button onClick={() => setSelected(t)}>
