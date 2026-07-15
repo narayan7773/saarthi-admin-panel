@@ -58,4 +58,56 @@
   .card h2{
     font-size:32px;
     margin-bottom:10px;
-  }
+  }.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.topbar h1{
+    margin:0;
+}
+
+.topbar p{
+    margin-top:6px;
+    color:#666;
+}
+
+.topbar-right{
+    display:flex;
+    gap:20px;
+    align-items:center;
+    font-size:16px;
+    font-weight:600;
+}.profile-menu{
+    position:relative;
+    cursor:pointer;
+}
+
+.profile-dropdown{
+    display:none;
+    position:absolute;
+    right:0;
+    top:35px;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    min-width:180px;
+    overflow:hidden;
+    z-index:100;
+}
+
+.profile-dropdown p{
+    margin:0;
+    padding:12px 15px;
+    cursor:pointer;
+}
+
+.profile-dropdown p:hover{
+    background:#f3f4f6;
+}
+
+.profile-menu:hover .profile-dropdown{
+    display:block;
+}

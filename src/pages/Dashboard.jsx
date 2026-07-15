@@ -38,7 +38,28 @@ function Dashboard() {
       </aside>
 
       <main className="content">
-        <h1>Dashboard</h1>
+      <div className="topbar">
+
+<div>
+  <h1>Dashboard</h1>
+  <p>Welcome back, Admin 👋</p>
+</div>
+
+<div className="topbar-right">
+  <span>🔔</span>
+  <div className="profile-menu">
+  <span>👤 Narayan ▾</span>
+
+  <div className="profile-dropdown">
+    <p>👤 My Profile</p>
+    <p>⚙ Settings</p>
+    <p>🚪 Logout</p>
+  </div>
+</div>
+  <span>{new Date().toLocaleDateString()}</span>
+</div>
+
+</div>
 
         <div className="cards">
 

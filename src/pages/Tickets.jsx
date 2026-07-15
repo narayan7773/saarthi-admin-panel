@@ -7,15 +7,19 @@ function Tickets() {
   const [selected, setSelected] = useState(null);
   const [remark, setRemark] = useState("");
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const ticketsPerPage = 10;
 
   useEffect(() => {
     loadTickets();
   }, []);
 
   async function loadTickets() {
-    const data = await getTickets();
-    setTickets(data);
-  }
+  const data = await getTickets();
+  setTickets(data);
+  setCurrentPage(1);
+}
 
   async function changeStatus(status) {
     await updateTicket(selected.ticket, status, remark);
@@ -27,6 +31,30 @@ function Tickets() {
 
     loadTickets();
   }
+  const filteredTickets = tickets.filter((t) => {
+    const matchesSearch =
+      (
+        t.ticket +
+        t.name +
+        t.mobile +
+        t.gmail
+      )
+        .toLowerCase()
+        .includes(search.toLowerCase());
+  
+    const matchesStatus =
+      statusFilter === "All" ||
+      t.status === statusFilter;
+  
+    return matchesSearch && matchesStatus;
+  });
+  
+  const lastIndex = currentPage * ticketsPerPage;
+  const firstIndex = lastIndex - ticketsPerPage;
+  
+  const currentTickets = filteredTickets.slice(firstIndex, lastIndex);
+  
+  const totalPages = Math.ceil(filteredTickets.length / ticketsPerPage);
 
   return (
     <div className="tickets-page">
@@ -36,9 +64,25 @@ function Tickets() {
   type="text"
   placeholder="🔍 Search Ticket, Name, Mobile, Gmail..."
   value={search}
-  onChange={(e) => setSearch(e.target.value)}
+  onChange={(e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  }}
   className="search-box"
 />
+<select
+  value={statusFilter}
+  onChange={(e) => {
+    setStatusFilter(e.target.value);
+    setCurrentPage(1);
+  }}
+  className="filter-box"
+>
+  <option>All</option>
+  <option>Pending</option>
+  <option>Approved</option>
+  <option>Rejected</option>
+</select>
 
       <table>
         <thead>
@@ -52,18 +96,7 @@ function Tickets() {
         </thead>
 
         <tbody>
-        {tickets
-  .filter((t) =>
-    (
-      t.ticket +
-      t.name +
-      t.mobile +
-      t.gmail
-    )
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  )
-  .map((t) => (
+        {currentTickets.map((t) => (
             <tr key={t.ticket}>
               <td>{t.ticket}</td>
               <td>{t.name}</td>
@@ -84,6 +117,27 @@ function Tickets() {
           ))}
         </tbody>
       </table>
+      <div className="pagination">
+
+  <button
+    disabled={currentPage === 1}
+    onClick={() => setCurrentPage(currentPage - 1)}
+  >
+    ⬅ Previous
+  </button>
+
+  <span>
+    Page {currentPage} of {totalPages}
+  </span>
+
+  <button
+    disabled={currentPage === totalPages}
+    onClick={() => setCurrentPage(currentPage + 1)}
+  >
+    Next ➡
+  </button>
+
+</div>
 
       {selected && (
 
